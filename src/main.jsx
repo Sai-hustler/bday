@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Sparkles, Flower2, Music2, VolumeX, Volume2, Stars, MailOpen, Gift, ArrowDown, Cake, Camera, X, Play, Pause } from 'lucide-react';
+import { Heart, Sparkles, Flower2, Stars, MailOpen, Gift, ArrowDown, Cake, Camera, X, Play, Pause } from 'lucide-react';
 import './styles.css';
 
 const memories = [
@@ -32,7 +32,6 @@ function App() {
   const [letterOpen, setLetterOpen] = useState(false);
   const [bouquetOpen, setBouquetOpen] = useState(false);
   const [cakeOpen, setCakeOpen] = useState(false);
-  const [musicOn, setMusicOn] = useState(false);
   const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
   const [noCount, setNoCount] = useState(0);
   const [activeMemory, setActiveMemory] = useState(null);
@@ -48,7 +47,6 @@ function App() {
   return <main>
     <div className="ambient-glow glow-one"/><div className="ambient-glow glow-two"/>
     <Petals />
-    <button className="sound-toggle" onClick={() => setMusicOn(v => !v)} aria-label={musicOn ? 'Turn sound off' : 'Turn sound on'} title="Sound is a visual toggle placeholder; add your own music file to enable audio"><span className="sound-icon">{musicOn ? <Volume2 size={16}/> : <VolumeX size={16}/>}</span><span>{musicOn ? 'Sound on' : 'Sound off'}</span></button>
 
     <AnimatePresence>
       {!opened && <motion.section className="intro-screen" key="intro" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.04, filter: 'blur(8px)' }} transition={{ duration: .8 }}>
@@ -147,7 +145,7 @@ function App() {
         {showConfetti && <div className="confetti-layer" aria-hidden="true">{Array.from({ length: 70 }, (_, i) => <i key={i} style={{ left: `${(i * 47) % 100}%`, animationDelay: `${(i % 12) * .08}s`, animationDuration: `${2.1 + (i % 9) * .18}s`, rotate: `${i * 29}deg` }}/>)}</div>}
         <div className="finale-bottom"><Heart size={14} fill="currentColor"/> made with a little extra love <Heart size={14} fill="currentColor"/></div>
       </section>
-      <footer className="footer"><span>FOR KRITHIKA, ALSO KNOWN AS KRITUU</span><span>one page, a thousand feelings ♡</span></footer>
+      <footer className="footer"><span>for krituu</span></footer>
     </motion.div>}
 
     <AnimatePresence>{activeMemory && <motion.div className="memory-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActiveMemory(null)}><motion.div className="memory-modal-card" initial={{ scale: .88, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: .92 }} onClick={e => e.stopPropagation()}><button className="modal-close" onClick={() => setActiveMemory(null)} aria-label="Close memory"><X size={18}/></button><img src={activeMemory.image} alt={activeMemory.date} onError={e => { e.currentTarget.style.display = 'none'; }}/><div className="modal-memory-copy"><span>{activeMemory.date}</span><p>{activeMemory.caption}</p><Heart size={18} fill="currentColor"/></div></motion.div></motion.div>}</AnimatePresence>
